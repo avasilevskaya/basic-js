@@ -18,7 +18,6 @@ const { NotImplementedError } = require('../extensions/index.js');
     let realDigits = digits.map(Number);
     console.log(realDigits);
     let reducer = (accumulator, curr) => accumulator + curr;
-    //console.log(realDigits.reduce(reducer));
     let sum = realDigits.reduce(reducer);
     if (sum > 9) {
       sum = getSumOfDigits(sum);
