@@ -19,16 +19,63 @@ const { NotImplementedError } = require('../extensions/index.js');
  * reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse') => '!NWAD TA KCATTA'
  * 
  */
+
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  encrypt(message, key) {
+
+    if (typeof message === 'undefined' || typeof key === 'undefined') {
+      throw new Error ("Incorrect arguments!")
+    }
+
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+    let cipher = "";
+
+    for(let i = 0, k = 0; i < message.length; i++){
+      let letter = message[i];
+      let code = letter.charCodeAt();
+  
+      if (code >= 65 && code <= 90) {
+        let codeNew = ((code - 65) + ( key[k%key.length].charCodeAt() - 65)) % 26;
+        cipher += String.fromCharCode(codeNew + 65);
+        k++;
+      } else {
+        cipher += letter;
+      }
+    }
+
+    return cipher;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  decrypt(message, key) {
+
+    if (typeof message === 'undefined' || typeof key === 'undefined') {
+      throw new Error ("Incorrect arguments!")
+    }
+
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+    let cipher = "";
+
+    for(let i = 0, k = 0; i < message.length; i++){
+      let letter = message[i];
+      let code = letter.charCodeAt();
+  
+      if (code >= 65 && code <= 90) {
+        let codeNew = code - key[k%key.length].charCodeAt() + 65 + 26;
+        cipher += String.fromCharCode(codeNew);
+        k++;
+      } else {
+        cipher += letter;
+      }
+    }
+    return cipher;
   }
 }
+
+
+
 
 module.exports = {
   VigenereCipheringMachine
