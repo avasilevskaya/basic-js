@@ -22,12 +22,12 @@ const chainMaker = {
       this.chain = [];
       throw error;
     }
-    const pos = position - 1;
-    if (pos > this.chain.length || pos < 0) {
+    //const pos = position - 1;
+    if (position > this.chain.length || position <= 0) {
       this.chain = [];
       throw error;
     }
-    this.chain.splice(pos, 1);
+    this.chain.splice(position - 1, 1);
     console.log(this.chain);
     return this;
   },
