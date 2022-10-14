@@ -22,9 +22,8 @@ const chainMaker = {
       this.chain = [];
       throw error;
     }
-    let n = this.chain.lenght;
     const pos = position - 1;
-    if (pos > n || pos < 0) {
+    if (pos > this.chain.length || pos < 0) {
       this.chain = [];
       throw error;
     }
