@@ -21,6 +21,9 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 
 class VigenereCipheringMachine {
+  constructor(direct = true) {
+    this.direct = direct;
+  }
 
   encrypt(message, key) {
 
@@ -28,6 +31,7 @@ class VigenereCipheringMachine {
       throw new Error ("Incorrect arguments!")
     }
 
+    if (!this.direct) message = message.split('').reverse().join('');
     message = message.toUpperCase();
     key = key.toUpperCase();
     let cipher = "";
@@ -37,7 +41,7 @@ class VigenereCipheringMachine {
       let code = letter.charCodeAt();
   
       if (code >= 65 && code <= 90) {
-        let codeNew = ((code - 65) + ( key[k%key.length].charCodeAt() - 65)) % 26;
+        let codeNew = ((code - 65) + (key[k % key.length].charCodeAt() - 65)) % 26;
         cipher += String.fromCharCode(codeNew + 65);
         k++;
       } else {
@@ -54,6 +58,7 @@ class VigenereCipheringMachine {
       throw new Error ("Incorrect arguments!")
     }
 
+    if (!this.direct) message = message.split('').reverse().join('');
     message = message.toUpperCase();
     key = key.toUpperCase();
     let cipher = "";
@@ -63,13 +68,19 @@ class VigenereCipheringMachine {
       let code = letter.charCodeAt();
   
       if (code >= 65 && code <= 90) {
-        let codeNew = code - key[k%key.length].charCodeAt() + 65 + 26;
+        let codeNew = 65 + code - key[k % key.length].charCodeAt();
+        if (codeNew < 65) {
+          codeNew += 26;
+        } else if (codeNew > 90) {
+          codeNew -= 26;
+        };
         cipher += String.fromCharCode(codeNew);
         k++;
       } else {
         cipher += letter;
       }
     }
+
     return cipher;
   }
 }
